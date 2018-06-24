@@ -26,7 +26,7 @@
 
 ;;; Code:
 
-(defvar tridactyl-font-lock-keywords
+(defvar tridactylrc-font-lock-keywords
   ;; sanitise [items]
   `(( ,(rx
         (group-n 1 bol "sanitise")
@@ -78,10 +78,10 @@
 
 ;;;###autoload
 (define-derived-mode tridactylrc-mode prog-mode "tridactylrc"
-  (font-lock-add-keywords nil tridactyl-font-lock-keywords)
+  (font-lock-add-keywords nil tridactylrc-font-lock-keywords)
   (setq-local comment-start "\"")
   (setq-local comment-end ""))
 
-(provide 'tridatyl-rc-mode)
+(provide 'tridatylrc-mode)
 
-;;; tridactyl-mode.el ends here
+;;; tridactylrc-mode.el ends here
