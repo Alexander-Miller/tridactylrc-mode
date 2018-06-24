@@ -1,4 +1,4 @@
-;;; tridactyl-mode.el --- A major mode for tridactyl's config file -*- lexical-binding: t -*-
+;;; tridactylrc-mode.el --- A major mode for tridactyl's config file -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Alexander Miller
 
