@@ -84,4 +84,4 @@
 
 (provide 'tridatyl-rc-mode)
 
-;;; tridactly-mode.el ends here
+;;; tridactyl-mode.el ends here
