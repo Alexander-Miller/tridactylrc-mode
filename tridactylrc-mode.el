@@ -53,7 +53,7 @@
     ;; bind key val [number|modifier]
     ( ,(rx
         bol
-        (group-n 1 "bind" (?? " "))
+        (group-n 1 (? "un") "bind" (?? " "))
         (zero-or-one
          (1+ " ")
          (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation) (?? " "))))
