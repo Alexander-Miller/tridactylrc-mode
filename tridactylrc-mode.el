@@ -38,10 +38,10 @@
 
     ;; set key val
     ( ,(rx
-        (group-n 1 bol "set")
+        (group-n 1 bol "set" (? "pref"))
         (1+ space)
         (zero-or-one
-         (group-n 2 (1+ (or alnum "-" "_")))
+         (group-n 2 (1+ (or alnum "-" "_" ".")))
          (1+ space)
          (zero-or-one
           (group-n 3 (1+ (or alnum "-" "_")))))
