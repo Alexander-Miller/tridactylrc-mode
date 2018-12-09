@@ -29,7 +29,8 @@
 (defvar tridactylrc-font-lock-keywords
   ;; sanitise [items]
   `(( ,(rx
-        (group-n 1 bol "sanitise")
+        bol
+        (group-n 1 "sanitise")
         (zero-or-one
          (group-n 2 (1+ (seq " " (1+ alnum)))))
         eol)
@@ -49,30 +50,31 @@
 
     ;; set key val
     ( ,(rx
-        (group-n 1 bol "set" (? "pref"))
-        (1+ space)
+        bol
+        (group-n 1 "set" (? "pref"))
+        (0+ " ")
         (zero-or-one
          (group-n 2 (1+ (or alnum "-" "_" ".")))
-         (1+ space)
+         (0+ " ")
          (zero-or-one
           (group-n 3 (1+ (or alnum "-" "_")))))
         eol)
-      (1 font-lock-keyword-face)
-      (2 font-lock-variable-name-face)
-      (3 font-lock-constant-face))
+      (1 font-lock-keyword-face nil t)
+      (2 font-lock-variable-name-face nil t)
+      (3 font-lock-constant-face nil t))
 
     ;; bind key val [number|modifier]
     ( ,(rx
         bol
         (group-n 1 (? "un") "bind" (?? " "))
         (zero-or-one
-         (1+ " ")
+         (0+ " ")
          (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation) (?? " "))))
          (zero-or-one
-          (1+ " ")
+          (0+ " ")
           (group-n 3 (1+ (or alnum "-" "_")) (?? " "))
           (zero-or-one
-           (1+ " ")
+           (0+ " ")
            (or (group-n 4 (? "-") (1+ num))
                (group-n 5 (? "-") (? "-") (1+ (or (syntax symbol) (syntax word) (syntax punctuation))))))))
         eol)
