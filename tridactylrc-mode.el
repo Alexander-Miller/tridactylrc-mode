@@ -36,6 +36,17 @@
       (1 font-lock-keyword-face)
       (2 font-lock-builtin-face))
 
+    ;; colors
+    ( ,(rx
+        bol
+        (group-n 1 (or "colors" "colours" "colorscheme" "colourscheme"))
+        (0+ " ")
+        (zero-or-one
+         (group-n 2 (1+ (seq " " (1+ alnum)))))
+        eol)
+      (1 font-lock-keyword-face nil t)
+      (2 font-lock-builtin-face nil t))
+
     ;; set key val
     ( ,(rx
         (group-n 1 bol "set" (? "pref"))
