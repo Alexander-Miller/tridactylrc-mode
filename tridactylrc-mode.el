@@ -57,11 +57,25 @@
          (group-n 2 (1+ (or alnum "-" "_" ".")))
          (0+ " ")
          (zero-or-one
-          (group-n 3 (1+ (or alnum "-" "_")))))
+          (group-n 3 (1+ nonl))))
         eol)
       (1 font-lock-keyword-face nil t)
       (2 font-lock-variable-name-face nil t)
       (3 font-lock-constant-face nil t))
+
+    ;; quickmark key val
+    ( ,(rx
+        bol
+        (group-n 1 "quickmark" (?? " "))
+        (zero-or-one
+         (0+ " ")
+         (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation))) (? " "))
+         (zero-or-one
+          (0+ " ")
+          (group-n 3 (1+ (or alnum num  "-"":" "." "/" "?" "=" "&"))))))
+      (1 font-lock-keyword-face)
+      (2 font-lock-type-face nil t)
+      (3 font-lock-builtin-face nil t))
 
     ;; bind key val [number|modifier]
     ( ,(rx
@@ -69,13 +83,13 @@
         (group-n 1 (? "un") "bind" (?? " "))
         (zero-or-one
          (0+ " ")
-         (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation) (?? " "))))
+         (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation))) (?? " "))
          (zero-or-one
           (0+ " ")
           (group-n 3 (1+ (or alnum "-" "_")) (?? " "))
           (zero-or-one
            (0+ " ")
-           (or (group-n 4 (? "-") (1+ num))
+           (or (group-n 4 (? (or "+" "-")) (1+ num))
                (group-n 5 (? "-") (? "-") (1+ (or (syntax symbol) (syntax word) (syntax punctuation))))))))
         eol)
       (1 font-lock-keyword-face)
