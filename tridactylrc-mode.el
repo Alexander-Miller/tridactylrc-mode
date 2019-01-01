@@ -95,6 +95,6 @@
   (setq-local comment-start "\"")
   (setq-local comment-end ""))
 
-(provide 'tridatylrc-mode)
+(provide 'tridactylrc-mode)
 
 ;;; tridactylrc-mode.el ends here
