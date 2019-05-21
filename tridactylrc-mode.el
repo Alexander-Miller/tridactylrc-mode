@@ -86,7 +86,11 @@
          (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation))) (?? " "))
          (zero-or-one
           (0+ " ")
-          (group-n 3 (1+ (or alnum "-" "_")) (?? " "))
+          (group-n 3
+                   (seq
+                    (1+ (or alnum "-" "_"))
+                    (0+ (seq " " (not (any "-")) (1+ (or alnum "-" "_")))))
+                   (?? " "))
           (zero-or-one
            (0+ " ")
            (or (group-n 4 (? (or "+" "-")) (1+ num))
