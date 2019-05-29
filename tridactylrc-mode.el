@@ -80,27 +80,41 @@
     ;; bind key val [number|modifier]
     ( ,(rx
         bol
+        ;; (un)bind
         (group-n 1 (? "un") "bind" (?? " "))
         (zero-or-one
          (0+ " ")
+         ;; <Key>
          (group-n 2 (1+ (or "<" ">" "-" (syntax symbol) (syntax word) (syntax punctuation))) (?? " "))
          (zero-or-one
           (0+ " ")
-          (group-n 3
-                   (seq
-                    (1+ (or alnum "-" "_"))
-                    (0+ (seq " " (not (any "-")) (1+ (or alnum "-" "_")))))
-                   (?? " "))
+          ;; command1 command2
+          (group-n
+           3
+           (seq
+            (1+ (or letter "-" "_"))
+            (0+
+             (or
+              ;; foo | bar
+              (group-n 4 (seq (0+ " ") "|" (0+ " ")))
+              (seq " " (not (any "-")) (1+ (or letter "-" "_"))))))
+           (?? " "))
           (zero-or-one
            (0+ " ")
-           (or (group-n 4 (? (or "+" "-")) (1+ num))
-               (group-n 5 (? "-") (? "-") (1+ (or (syntax symbol) (syntax word) (syntax punctuation))))))))
+           (or (group-n
+                5
+                (? (or "+" "-")) (0+ num))
+               (group-n
+                6
+                (or "#"
+                    (1+ "-" (? "-") (1+ (or (syntax symbol) (syntax word) (syntax punctuation))))))))))
         eol)
       (1 font-lock-keyword-face)
       (2 font-lock-type-face nil t)
       (3 font-lock-function-name-face nil t)
-      (4 font-lock-constant-face nil t)
-      (5 font-lock-string-face nil t))
+      (4 font-lock-keyword-face t t)
+      (5 font-lock-constant-face nil t)
+      (6 font-lock-string-face nil t))
 
     ;; stupid workaround for comments
     ( ,(rx bol "\"" (1+ any) "\"" eol)
